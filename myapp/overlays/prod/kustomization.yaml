@@ -1,4 +1,23 @@
-# overlays/prod/kustomization.yaml
-commonLabels:
-  env: production  # Label applied to every resource
-namePrefix: prod-  # Prefix added to the name of all resources
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: prod-
+namespace: demo
+
+resources:
+  - ../../base
+
+images:
+  - name: public.ecr.aws/nginx/nginx
+    newName: <YOUR_ECR_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/<ECR_REPOSITORY>
+    newTag: prod
+
+patchesStrategicMerge:
+  - patch-deployment.yaml
+  - patch-service.yaml
+
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - LOG_LEVEL=warn
+      - APP_MODE=production
