@@ -1,2 +1,6 @@
-resources:
-  - deployment.yaml # List of resource files to include in this configuration
+# base/kustomization.yaml
+secretGenerator:
+- name: my-secret     # Name of the Secret
+  literals:
+  - username=admin    # Key-value pairs; consider external management for real secrets
+  - password=s3cr3t
