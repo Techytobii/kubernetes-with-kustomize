@@ -1,7 +1,0 @@
-# replica_count_dev.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-app   # must match your base deployment name
-spec:
-  replicas: 2
